@@ -106,7 +106,7 @@ def process_loyalty(order):
 # -----------------------------
 @app.route("/")
 def home():
-    return render_template("new_order.html")
+    return render_template("index.html")
 
 @app.route("/create_order", methods=["POST"])
 def create_order():
