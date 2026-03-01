@@ -5,8 +5,6 @@ import random  # optional for invoice number
 import os
 
 app = Flask(__name__)    # Initialize DB 
-DB_PATH = os.path.join(os.environ.get("DATA_PATH", "."), "shinemaster.db")
-conn = sqlite3.connect(DB_PATH)
 
 COMPANY_INFO = {
     "name": "SHINEMASTER AUTO",
@@ -20,8 +18,10 @@ def inject_company():
 # -----------------------------
 # Initialize Database
 # -----------------------------
+DB_PATH = os.path.join(os.path.dirname(__file__), "shinemaster.db")
+
 def init_db():
-    conn = sqlite3.connect("shinemaster.db")
+    conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
     # Orders table
     c.execute("""
