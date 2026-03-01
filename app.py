@@ -50,6 +50,10 @@ def init_db():
     conn.commit()
     conn.close()
 
+@app.route("/favicon.ico")
+def favicon():
+    return redirect("/static/images/favicon.ico")
+
 # -----------------------------
 # Loyalty Logic
 # -----------------------------
