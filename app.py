@@ -60,7 +60,7 @@ def favicon():
 
 def process_loyalty(order):
     car_plate = order["car_plate"].replace(" ", "").upper()
-    conn = sqlite3.connect("shinemaster.db")
+    conn = sqlite3.connect(DB_PATH)
     cur = conn.cursor()
 
     # Get current paid count
@@ -133,7 +133,7 @@ def create_order():
     order = process_loyalty(order)
 
     # Insert order into database
-    conn = sqlite3.connect("shinemaster.db")
+    conn = sqlite3.connect(DB_PATH)
     cur = conn.cursor()
 
     cur.execute("""
@@ -176,7 +176,7 @@ def create_order():
 
 @app.route("/check_loyalty/<car_plate>")
 def check_loyalty(car_plate):
-    conn = sqlite3.connect("shinemaster.db")
+    conn = sqlite3.connect(DB_PATH)
     cur = conn.cursor()
 
     cur.execute(
@@ -205,27 +205,13 @@ def new_order():
     service_type = request.form["service_type"]
     price = float(request.form["price"])
     payment_method = request.form["payment_method"]
-    car_type = r@app.route("/create_order", methods=["POST"])
-def create_order():
-    car_plate = request.form["car_plate"].upper()
-    car_type = request.form.get("car_type","-")
-    service_type = request.form["service_type"]
-    price = float(request.form["price"])
-    payment_method = request.form["payment_method"]
-
-    order = {
-        "car_plate": car_plate,
-        "car_type": car_type,
-        "service_type": service_type,
-        "price": price,
-        "payment_method": payment_method
-    }
+    car_type = app.route("/create_order", methods=["POST"])
 
     # Apply loyalty
     order = process_loyalty(order)
 
     # Save to DB (example)
-    conn = sqlite3.connect("shinemaster.db")
+    conn = sqlite3.connect(DB_PATH)
     cur = conn.cursor()
     cur.execute("""
         INSERT INTO orders (car_plate, car_type, service_type, price, payment_method, payment_status)
@@ -242,7 +228,7 @@ def create_order():
     order = process_loyalty(order)
 
     # Insert order WITHOUT invoice first
-    conn = sqlite3.connect("shinemaster.db")
+    conn = sqlite3.connect(DB_PATH)
     cur = conn.cursor()
 
     cur.execute("""
@@ -282,7 +268,7 @@ def create_order():
 
 
 def get_payment_report():
-    conn = sqlite3.connect("shinemaster.db")
+    conn = sqlite3.connect(DB_PATH)
     cur = conn.cursor()
 
     # Today’s date
