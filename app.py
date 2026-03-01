@@ -324,7 +324,11 @@ def payment_report():
 
 
 if __name__ == "__main__":
-    from your_db_init import init_db  # optional if you have DB init
+    # Make sure DB exists first
     init_db()
+
+    # Get port from Railway or default
     port = int(os.environ.get("PORT", 8080))
-    app.run(host="0.0.0.0", port=port    init_db()  # make sure DB exists
+
+    # Run Flask app
+    app.run(host="0.0.0.0", port=port)
