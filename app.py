@@ -318,6 +318,6 @@ def payment_report():
 
 
 if __name__ == "__main__":
-    init_db()
-    port = int(os.environ.get("PORT", 8080))  # Railway will provide this dynamically
-    app.run(host="0.0.0.0", port=port)
+    init_db()  # make sure DB exists
+    port = int(os.environ.get("PORT", 8080))  # Railway sets PORT automatically
+    app.run(host="0.0.0.0", port=port, debug=False)
