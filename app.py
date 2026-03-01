@@ -5,6 +5,8 @@ import random  # optional for invoice number
 import os
 
 app = Flask(__name__)    # Initialize DB 
+DB_PATH = os.path.join(os.environ.get("DATA_PATH", "."), "shinemaster.db")
+conn = sqlite3.connect(DB_PATH)
 
 COMPANY_INFO = {
     "name": "SHINEMASTER AUTO",
