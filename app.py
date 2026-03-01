@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, jsonify
 import sqlite3
 from datetime import datetime  # <- import at top
 import random  # optional for invoice number
+import os
 
 app = Flask(__name__)    # Initialize DB 
 
@@ -318,5 +319,5 @@ def payment_report():
 
 if __name__ == "__main__":
     init_db()
-    app.run(debug=True)
-    app.run(host="0.0.0.0", port=3000)
+    port = int(os.environ.get("PORT", 3000))  # default 3000 if PORT not set
+    app.run(host="0.0.0.0", port=port)
