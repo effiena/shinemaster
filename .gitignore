@@ -1,0 +1,15 @@
+# Python artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+
+# SQLite database
+*.db
+
+# IDE / OS files
+*.swp
+.DS_Store
