@@ -4,6 +4,7 @@ from datetime import datetime
 import os
 
 app = Flask(__name__)
+init_db()
 
 COMPANY_INFO = {
     "name": "SHINEMASTER AUTO",
