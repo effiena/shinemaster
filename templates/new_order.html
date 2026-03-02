@@ -175,7 +175,7 @@
 	    <input type="text" id="car_plate" name="car_plate" onkeyup="checkLoyalty()">
             <input type="text" id="loyalty_status" readonly placeholder="Loyalty Status">
 	    <label for="car_type">Car Type</label>
-            <select name="car_type" id="car_type" required>
+	    <select name="car_type" id="car_type" onchange="calculatePrice()" required>
                 <option value="Sedan">Sedan</option>
                 <option value="SUV">SUV</option>
                 <option value="MPV">MPV</option>
@@ -183,17 +183,33 @@
 
 
 <select name="service_type" id="service_type" onchange="calculatePrice()" required>
-    <option value="">--Select Service--</option>
-    <option value="Car Wash-Basic">Car Wash-Basic</option>
-    <option value="Car Wash-Medium">Car Wash-Medium</option>
-    <option value="Car Wash-Maintainance">Car Wash-Maintainance</option>
-    <option value="Polishing-Package A">Polishing-Package A</option>
-    <option value="Polishing-Package B">Polishing-Package B</option>
-    <option value="Polishing-Package C">Polishing-Package C</option>
-    <option value="Waxing-Package A">Waxing-Package A</option>
-    <option value="Waxing-Package B">Waxing-Package B</option>
-    <option value="Waxing-Package C">Waxing-Package C</option>
+
+<option value="">--Select Service--</option>
+
+<optgroup label="CAR WASH">
+<option value="wash_basic">CAR WASH - BASIC</option>
+<option value="wash_special">CAR WASH - SPECIAL</option>
+<option value="wash_maintain">CAR WASH - MAINTAINANCE</option>
+</optgroup>
+
+<optgroup label="POLISHING">
+<option value="coat1">COATING - 1 YEAR</option>
+<option value="coat2">COATING - 2 YEAR</option>
+<option value="coat3">COATING - 3 YEAR</option>
+
+<option value="disp2">DISPOSABLE - 2 YEAR</option>
+<option value="disp3">DISPOSABLE - 3 YEAR</option>
+
+<option value="wax">WAXING</option>
+</optgroup>
+
+<optgroup label="INTERIOR">
+<option value="int_detail">INTERIOR DETAILING</option>
+<option value="int_coat">INTERIOR COATING</option>
+</optgroup>
+
 </select>
+
 
 <div class="price-box">
     RM <span id="price_display">0.00</span>
@@ -218,32 +234,100 @@
 
     <script>
 const priceTable = {
-    "Car Wash-Basic": 20,
-    "Car Wash-Medium": 30,
-    "Car Wash-Maintainance": 40,
-    "Polishing-Package A": 150,
-    "Polishing-Package B": 200,
-    "Polishing-Package C": 250,
-    "Waxing-Package A": 120,
-    "Waxing-Package B": 160,
-    "Waxing-Package C": 200
-};
 
-function calculatePrice() {
-    const service = document.getElementById("service_type").value;
-    const priceDisplay = document.getElementById("price_display");
-    const hiddenPrice = document.getElementById("price");
+wash_basic: {
+    Sedan: 20,
+    SUV: 24,
+    MPV: 28
+},
 
-    if(service && priceTable[service]) {
-        const price = priceTable[service];
-        priceDisplay.textContent = price.toFixed(2);
-        hiddenPrice.value = price;
-    } else {
-        priceDisplay.textContent = "0.00";
-        hiddenPrice.value = "";
-    }
+wash_special: {
+    Sedan: 48,
+    SUV: 58,
+    MPV: 68
+},
+
+wash_maintain: {
+    Sedan: 98,
+    SUV: 108,
+    MPV: 118
+},
+
+coat1: {
+    Sedan: 488,
+    SUV: 588,
+    MPV: 588
+},
+
+coat2: {
+    Sedan: 688,
+    SUV: 788,
+    MPV: 788
+},
+
+coat3: {
+    Sedan: 888,
+    SUV: 988,
+    MPV: 988
+},
+
+disp2: {
+    Sedan: 588,
+    SUV: 688,
+    MPV: 688
+},
+
+disp3: {
+    Sedan: 788,
+    SUV: 888,
+    MPV: 888
+},
+
+wax: {
+    Sedan: 288,
+    SUV: 388,
+    MPV: 388
+},
+
+int_detail: {
+    Sedan: 188,
+    SUV: 288,
+    MPV: 288
+},
+
+int_coat: {
+    Sedan: 288,
+    SUV: 388,
+    MPV: 388
 }
 
+}
+
+
+function calculatePrice() {
+
+    const service = document.getElementById("service_type").value
+    const carType = document.getElementById("car_type").value
+
+    const priceDisplay = document.getElementById("price_display")
+    const hiddenPrice = document.getElementById("price")
+
+    if(service && carType && priceTable[service]){
+
+        const price = priceTable[service][carType]
+
+        if(price){
+            priceDisplay.textContent = price.toFixed(2)
+            hiddenPrice.value = price
+        }
+
+    } else {
+
+        priceDisplay.textContent = "0.00"
+        hiddenPrice.value = ""
+
+    }
+}
 
 async function checkLoyalty(){
 
