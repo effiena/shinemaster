@@ -51,7 +51,7 @@ def init_db():
     conn.close()
 
 # run database initialization
-    init_db()
+init_db()
 
 @app.route("/favicon.ico")
 def favicon():
