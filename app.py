@@ -4,7 +4,6 @@ from datetime import datetime
 import os
 
 app = Flask(__name__)
-init_db()
 
 COMPANY_INFO = {
     "name": "SHINEMASTER AUTO",
@@ -50,6 +49,9 @@ def init_db():
     """)
     conn.commit()
     conn.close()
+
+# run database initialization
+    init_db()
 
 @app.route("/favicon.ico")
 def favicon():
@@ -202,6 +204,5 @@ def payment_report():
 # Run App
 # -----------------------------
 if __name__ == "__main__":
-    init_db()
     port = int(os.environ.get("PORT", 8080))
     app.run(host="0.0.0.0", port=port)
